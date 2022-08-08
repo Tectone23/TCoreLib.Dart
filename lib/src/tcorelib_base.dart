@@ -1,5 +1,3 @@
-// TODO: Put public facing types in this file.
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +10,6 @@ class Asgard{
   }
 }
 
-/// Checks if you are awesome. Spoiler: you are.
 class Client {
   bool   connected;
   String URI       = "http://0.0.0.0:8080";
