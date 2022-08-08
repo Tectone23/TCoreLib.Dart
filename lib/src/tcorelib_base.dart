@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:tcorelib/extras/todo.dart';
 import 'package:http/http.dart' as http;
 
 class Asgard{
@@ -32,6 +33,7 @@ class Client {
   }
 
   Future<http.Response> sendRequest() async {
+    TODO("Add more requirements to the request body");
     // Compose URL (URI, PATH, BODY)
     var response = await http.get(
         Uri.parse(URI)
@@ -40,6 +42,7 @@ class Client {
   }
 
   Future<http.Response> getModules() async {
+    TODO("Add more requirements to the request body");
     // Compose URL (URI, PATH, BODY)
     var response = await http.get(
         Uri.parse(URI + "/list_asgard")
