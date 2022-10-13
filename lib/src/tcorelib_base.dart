@@ -2,38 +2,34 @@ import 'dart:convert';
 import 'package:tcorelib/extras/todo.dart';
 import 'package:http/http.dart' as http;
 
-class Asgard{
+class Asgard {
   List modules = [];
 
-  updateModules(List modules){
+  updateModules(List modules) {
     this.modules = modules;
     //print("Loaded modules: $modules");
   }
 }
 
 class Client {
-  bool   connected;
-  String URI       = "http://localhost:8080";
+  bool connected;
+  String URI = "http://localhost:8080";
   String URIBackup = "0.0.0.0";
-  int    PortBackup= 8080;
+  int PortBackup = 8080;
   Asgard asgard;
 
   Client()
-  : asgard = Asgard(),
-    connected = false
-  {}
-
+      : asgard = Asgard(),
+        connected = false {}
 
   /// Initialize components for use later
-  /// Did this due to the constructor 
+  /// Did this due to the constructor
   /// not being async
   Future<bool> InitRest() async {
     var data = await getModules();
     var jsondata = jsonDecode(data.body);
 
-    asgard.updateModules(
-      jsondata["data"]["data"]
-    );
+    asgard.updateModules(jsondata["data"]["data"]);
 
     return true;
   }
@@ -47,21 +43,16 @@ class Client {
   ///   "function":...
   ///   "params":...
   /// }
-  Future<http.Response> sendRequest(
-    Map<String, String> bbody
-  ) async {
+  Future<http.Response> sendRequest(Map<String, String> bbody) async {
     TODO("Add more requirements to the request body");
-    
+
     Uri _myUri = Uri(
-      scheme: 'http',
-      host: URIBackup,
-      port: PortBackup,
-      path: '/asgard',
-      queryParameters: bbody
-    );
-    var response = await http.get(
-        _myUri
-    );
+        scheme: 'http',
+        host: URIBackup,
+        port: PortBackup,
+        path: '/asgard',
+        queryParameters: bbody);
+    var response = await http.get(_myUri);
     return response;
   }
 
@@ -71,21 +62,18 @@ class Client {
   Future<http.Response> getModules() async {
     TODO("Add more requirements to the request body");
     // Compose URL (URI, PATH, BODY)
-    var response = await http.get(
-        Uri.parse(URI + "/list_asgard")
-    );
+    var response = await http.get(Uri.parse(URI + "/asgard"));
     if (response.statusCode != 200) {
-      throw Exception("Failed to get the module list. Return code is ${response.statusCode}");
+      throw Exception(
+          "Failed to get the module list. Return code is ${response.statusCode}");
     }
     return response;
   }
 
-  /// Testing 
+  /// Testing
   Future<bool> tryConnect() async {
     print("Trying to connect to $URI");
-    var request = await http.get(
-        Uri.parse(URI)
-    );
+    var request = await http.get(Uri.parse(URI));
     // Test specific only
     if (request.statusCode == 200) {
       return true;
