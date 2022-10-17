@@ -1,9 +1,9 @@
 import 'package:tcorelib/tcorelib.dart';
 import 'package:test/test.dart';
 
-void main()  {
+void main() {
   group('[Test]', () {
-    final TCoreClient = Client();
+    final TCoreClient = Client("192.168.2.8");
 
     setUp(() {
       // Additional setup goes here.
@@ -15,6 +15,10 @@ void main()  {
 
     test('Init the client', () async {
       expect(await TCoreClient.InitRest(), true);
+    });
+
+    test('Modules', () async {
+      expect((await TCoreClient.getModules()).statusCode == 200, true);
     });
   });
 }

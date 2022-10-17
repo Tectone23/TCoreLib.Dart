@@ -1,1 +1,1 @@
-void TODO(a) => print("TODO: ${a}");
+void TODO(a) => print("TODO: $a");
