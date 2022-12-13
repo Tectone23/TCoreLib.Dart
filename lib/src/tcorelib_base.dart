@@ -7,7 +7,7 @@ class Asgard {
 
   updateModules(List modules) {
     this.modules = modules;
-    //print("Loaded modules: $modules");
+    print("Loaded modules: $modules");
   }
 }
 
@@ -21,13 +21,27 @@ class Client {
       : asgard = Asgard(),
         connected = false;
 
+  /// Wrapper base for initialization and getting a cog
+  Future<bool> init(List<String> cogNames) async {
+    if (await InitRest()) {
+      for (final cogName in cogNames) {
+        if (!asgard.modules.contains(cogName)) {
+          return false;
+        }
+      }
+      return true;
+    } else {
+      throw Exception("Failed to initalize TCore.Lib");
+    }
+  }
+
   /// Initialize components for use later
   /// Did this due to the constructor
   /// not being async
   Future<bool> InitRest() async {
     var data = await getModules();
-    var jsondata = jsonDecode(data.body);
-    asgard.updateModules(jsondata["data"]["data"]);
+    Map<String, dynamic> jsondata = jsonDecode(data.body);
+    asgard.updateModules(jsondata["data"].keys.toList());
 
     return true;
   }
